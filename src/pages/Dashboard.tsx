@@ -1,12 +1,5 @@
-import * as React from 'react';
+// import * as React from "react";
 
-export interface  DashboardProps {
-}
-
-export function Dashboard (props:  DashboardProps) {
-  return (
-    <div>
-      
-    </div>
-  );
-}
+// export function Dashboard() {
+//   return <div>Dashboard page</div>;
+// }

@@ -1,23 +1,13 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import "./App.css";
-import { Route, Routes } from "react-router-dom";
-import { MainLayout } from "./components/layout";
-import { routes } from "./routes";
+import { Outlet, Route, Routes, useRoutes } from "react-router-dom";
+import { AdminLayout, MainLayout } from "@/components/layout";
+import { Router } from "./routes";
+import Dashboard from "./features/dashboard";
+import { Profile } from "./features/profile";
 
 function App() {
   const [count, setCount] = useState(0);
-
-  return (
-    <>
-      <Routes>
-        {routes.map((route, index) => {
-          const Page = route.component;
-          return <Route key={index} path={route.path} element={<Page />} />;
-        })}
-      </Routes>
-    </>
-  );
+  return <Router />;
 }
 
 export default App;

@@ -10,7 +10,8 @@ import {
 import { Stack } from "@mui/system";
 import * as React from "react";
 import { Menu } from "@mui/icons-material";
-export function AdminLayout({ children }: LayoutProps) {
+import { Outlet } from "react-router-dom";
+export function AdminLayout() {
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
   return (
     <>
@@ -27,11 +28,12 @@ export function AdminLayout({ children }: LayoutProps) {
           <Typography variant="h6">Dashboard</Typography>
         </Toolbar>
       </AppBar>
-      <Drawer open={isDrawerOpen} onClose={() => setIsDrawerOpen(false)}>
-        // Add navigation links or other content here
-      </Drawer>
+      <Drawer
+        open={isDrawerOpen}
+        onClose={() => setIsDrawerOpen(false)}
+      ></Drawer>
       <Grid container spacing={2}>
-        // Add dashboard widgets or other content here
+        <Outlet />
       </Grid>
     </>
   );
