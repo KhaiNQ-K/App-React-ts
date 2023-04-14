@@ -1,40 +1,28 @@
-import { LayoutProps } from "@/models";
-import {
-  AppBar,
-  Drawer,
-  Grid,
-  IconButton,
-  Toolbar,
-  Typography,
-} from "@mui/material";
-import { Stack } from "@mui/system";
-import * as React from "react";
-import { Menu } from "@mui/icons-material";
-import { Outlet } from "react-router-dom";
+import { Box, Grid, useMediaQuery } from '@mui/material'
+import { Sidebar, Topbar } from '@/components/common'
+import { Outlet } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { useState } from 'react'
+
 export function AdminLayout() {
-  const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
+  const isNonMobile = useMediaQuery('(min-width:600px)')
+  // const {data} = useSelector((state) => state.user);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(true)
+  const handleCloseSidebar = (value: boolean) => {
+    setIsDrawerOpen(value)
+  }
   return (
-    <>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            onClick={() => setIsDrawerOpen(true)}
-          >
-            <Menu />
-          </IconButton>
-          <Typography variant="h6">Dashboard</Typography>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        open={isDrawerOpen}
-        onClose={() => setIsDrawerOpen(false)}
-      ></Drawer>
-      <Grid container spacing={2}>
+    <Box display={isNonMobile ? 'flex' : 'block'} width="100%" height="100%">
+      <Sidebar
+        drawerWidth="250px"
+        isNonMobile={false}
+        isSidebarOpen={isDrawerOpen}
+        onClose={handleCloseSidebar}
+      />
+      <Box>
+        <Topbar />
         <Outlet />
-      </Grid>
-    </>
-  );
+      </Box>
+    </Box>
+  )
 }
