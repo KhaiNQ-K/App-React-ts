@@ -1,10 +1,15 @@
-import * as React from "react";
-import { Navigate, Route, RouteProps } from "react-router-dom";
+import { selectCurrentUser } from '@/features/auth/authSlice'
+import { User } from '@/models'
+import { useSelector } from 'react-redux'
+import { Navigate, Outlet } from 'react-router-dom'
 
-export interface PrivateRouteProps {}
+export interface PrivateRouteProps {
+  allowedRoles: string[]
+}
 
-export function PrivateRoute(props: RouteProps) {
-  const isLoggedIn = Boolean(localStorage.getItem("access_token"));
-  if (!isLoggedIn) return <Navigate to="/login" replace />;
-  return <Route {...props} />;
+export function PrivateRoute({ allowedRoles }: PrivateRouteProps) {
+  const currentUser: User = useSelector(selectCurrentUser)
+
+  const isAllowedRoles = currentUser.roles.find((role) => allowedRoles?.includes(role))
+  return isAllowedRoles ? <Outlet /> : <Navigate to="*" state={{ from: location }} replace />
 }
